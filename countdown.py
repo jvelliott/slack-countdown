@@ -56,11 +56,9 @@ def events(strdate, event, business_days):
     day_qualifier = ""
     if business_days:
         day_qualifier = "business "
-    assert (days >= -2), "Date needs to be in the future"
-    if days == -1:
-        return "%d %sday since %s" % (1, day_qualifier, event)
-    elif days == -2:
-        return "%d %sdays since %s" % (2, day_qualifier, event)
+    assert (days >= 0), "Date needs to be in the future"
+    if days == 0:
+        return "%s IS TODAY BABY" % (event)
     elif days == 1:
         return "%d %sday until %s" % (days, day_qualifier, event)
     else:

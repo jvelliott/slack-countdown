@@ -75,12 +75,10 @@ def date_only(strdate, business_days):
     day_qualifier = ""
     if business_days:
         day_qualifier = "business "
-    assert (days >= -2), "Date needs to be in the future"
+    assert (days >= 0), "Date needs to be in the future"
     futuredate = datetime.strptime(strdate, '%Y-%m-%d')
-    if days == -1:
-        return "%d %sday since %s" % (1, day_qualifier, futuredate.strftime("%d %B, %Y"))
-    if days == -2:
-        return "%d %sdays since %s" % (days, day_qualifier, futuredate.strftime("%d %B, %Y")) 
+    if days == 0:
+        return "%s IS TODAY BABY" % (days, day_qualifier, futuredate.strftime("%d %B, %Y")) 
     if days == 1:
         return "%d %sday until %s" % (days, day_qualifier, futuredate.strftime("%d %B, %Y")) 
     else:
@@ -124,7 +122,7 @@ def post_error():
         ]
     }
     
-    r = requests.post(SLACK_URL, data=json.dumps(payload))
+    # r = requests.post(SLACK_URL, data=json.dumps(payload))
  
 
 @manager.option("-d", "--deadline", dest="date",
@@ -149,7 +147,7 @@ def deadline(date, event, business_days):
         else:
             result = days_from_christmas()
     except:
-        post_error()
+        # post_error()
     else:
         post(result)
         
